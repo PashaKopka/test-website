@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.views.generic.base import View
-from .forms import SignUpForm, LogInForm
 from django.contrib.auth import authenticate, login
+
+from .forms import SignUpForm, LogInForm
+from .models import User
 
 
 class SignUpView(View):
@@ -13,10 +15,12 @@ class SignUpView(View):
 
     def post(self, request):
         form = SignUpForm(request.POST)
+
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
         if form.is_valid():
-            form = form.save(commit=False)
-            form.last_login = now()
-            form.save()
+            User.objects.create_user(username=username, email=email, password=password)
         return redirect('sign_up')
 
 
@@ -29,10 +33,8 @@ class LogInView(View):
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
-        print(username, password)
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
+            user.last_login = now()
             login(request, user)
-            print('da')
         return redirect('log_in')
