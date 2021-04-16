@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+</head>
+<body>
+<form method="post" action="{% url 'log_in_user' %}">
+    {% csrf_token %}
+    <table>
+        {{ log_in_form.as_table }}
+    </table>
+    <button type="submit">Sign up</button>
+</form>
+<p>Username: <b>{{ request.user.username }}</b></p>
+</body>
+</html>
