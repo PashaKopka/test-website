@@ -20,8 +20,8 @@ class User(m.User):
     """
     This is user model
     """
-    posts = models.ManyToManyField(Post)
-    liked_posts = models.ManyToManyField(Post)
+    posts = models.ManyToManyField(Post, related_name='posts')
+    liked_posts = models.ManyToManyField(Post, related_name='liked_posts')
     last_request = models.DateTimeField(auto_now=True)
 
     class Meta:
