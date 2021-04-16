@@ -12,8 +12,8 @@ class Post(models.Model):
     likes_count = models.IntegerField(default=0)
 
     class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
 
 
 class User(m.User):

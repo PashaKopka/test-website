@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'test_website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'weather_db',
+        'NAME': 'test_website_db',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
