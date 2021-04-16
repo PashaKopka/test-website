@@ -6,7 +6,13 @@
 </head>
 <body>
 
-
+<form method="post" action="{% url 'sign_up_user' %}">
+    {% csrf_token %}
+    <table>
+        {{ sign_up_form.as_table }}
+    </table>
+    <button type="submit">Sign up</button>
+</form>
 
 </body>
 </html>
