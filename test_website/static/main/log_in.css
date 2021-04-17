@@ -1,0 +1,17 @@
+#log_in_body{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+main#main_form_block{
+	width: 400px;
+	height: 300px;
+}
+
+form#log_in_form{
+	height: 100%;
+  display: grid;
+}

@@ -1,17 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LogIn</title>
-</head>
-<body>
-<form method="post" action="{% url 'log_in_user' %}">
-    {% csrf_token %}
-    <table>
-        {{ log_in_form.as_table }}
-    </table>
-    <button type="submit">Sign up</button>
-</form>
-<p>Username: <b>{{ request.user.username }}</b></p>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="{% static 'main/log_in.css' %}" rel="stylesheet">
+
+<body id="log_in_body" class="text-center vsc-initialized">
+
+<main id="main_form_block" class="form-signin">
+    <form action="{% url 'log_in_user' %}" method="post" id="log_in_form">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal">Please login</h1>
+
+        <div class="form-floating">
+            <input name="username" type="text" class="form-control" id="floatingUsername" placeholder="username">
+            <label for="floatingUsername">Username</label>
+        </div>
+
+        <div class="form-floating">
+            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
+    </form>
+</main>
+
+
 </body>
-</html>
+
+
+{% endblock content %}
