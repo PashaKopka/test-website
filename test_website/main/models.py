@@ -9,7 +9,7 @@ class Post(models.Model):
     """
     name = models.CharField(max_length=150, blank=False)
     article = models.TextField(blank=False)
-    image = models.FileField(upload_to='uploads/', blank=True)
+    image = models.ImageField(upload_to='uploads/', blank=True)
     likes_count = models.IntegerField(default=0)
 
     class Meta:

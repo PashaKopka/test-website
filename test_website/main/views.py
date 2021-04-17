@@ -4,8 +4,17 @@ from django.views.generic.base import View
 from django.contrib.auth import authenticate, login
 
 from .forms import SignUpForm, LogInForm
-from .models import User
+from .models import User, Post
 
+
+class HomePageView(View):
+
+    def get(self, request):
+        posts_list = Post.objects.all()
+        return render(request, 'main/homepage.html', {'posts_list': posts_list})
+
+
+# User actions views
 
 class SignUpView(View):
 
