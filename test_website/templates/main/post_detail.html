@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<title>{{ post.name }}</title>
+
+<main class="container">
+    <div id="cont" class="row">
+        <div class="col-md-8">
+
+            <article class="blog-post">
+                <h2 class="blog-post-title">{{ post.name }}</h2>
+
+                <p>{{ post.article }}</p>
+            </article>
+
+            <nav class="blog-pagination" aria-label="Pagination">
+                <span>{{ post.likes_count }}</span>
+                <a class="btn btn-outline-primary" href="">Like</a>
+            </nav>
+
+        </div>
+
+    </div>
+</main>
+{% endblock content %}

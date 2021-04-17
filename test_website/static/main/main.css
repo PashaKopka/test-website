@@ -1,0 +1,57 @@
+#article_poster{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 225px;
+}
+#article_poster_name{
+	font-family: arial;
+  display: block;
+  font-size: 20px;
+  color: #fff;
+}
+#log_in_body{
+	width: 100%;
+	height: 90vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+main#main_form_block{
+	width: 400px;
+	height: 300px;
+}
+
+form#log_in_form{
+	height: 100%;
+  display: grid;
+}
+#cont{
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 150px;
+}
+#sign_up_body{
+	width: 100%;
+	height: 90vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+main#main_form_block{
+	width: 400px;
+	height: 300px;
+}
+
+form#sign_up_form{
+	height: 100%;
+  display: grid;
+}
+#username{
+	font-family: arial;
+	margin-left: 20px;
+}

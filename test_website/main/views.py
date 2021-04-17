@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.views.generic.base import View
 from django.contrib.auth import authenticate, login
+from django.views.generic import DetailView
 
 from .forms import SignUpForm, LogInForm
 from .models import User, Post
 
+
+# HomePage
 
 class HomePageView(View):
 
@@ -47,3 +50,10 @@ class LogInView(View):
             user.last_login = now()
             login(request, user)
         return redirect('log_in')
+
+
+# Post views
+
+class PostDetailView(DetailView):
+    model = Post
+    slug_field = 'url'

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import models as m
 from django.utils.timezone import now
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -11,6 +12,10 @@ class Post(models.Model):
     article = models.TextField(blank=False)
     image = models.ImageField(upload_to='uploads/', blank=True)
     likes_count = models.IntegerField(default=0)
+    url = models.CharField(max_length=150, blank=False)
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.url})
 
     class Meta:
         verbose_name = 'Статья'

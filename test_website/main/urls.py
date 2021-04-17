@@ -9,4 +9,6 @@ urlpatterns = [
 
     path('log_in/', LogInView.as_view(), name='log_in'),
     path('log_in_user/', LogInView.as_view(), name='log_in_user'),
+
+    path('post_detail/<slug:slug>/', PostDetailView.as_view(), name='post_detail'),
 ]
