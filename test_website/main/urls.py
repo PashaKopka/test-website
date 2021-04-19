@@ -11,4 +11,5 @@ urlpatterns = [
     path('log_in_user/', LogInView.as_view(), name='log_in_user'),
 
     path('post_detail/<slug:slug>/', PostDetailView.as_view(), name='post_detail'),
+    path('post_detail/<slug:slug>/like', LikePostView.as_view(), name='like_post'),
 ]

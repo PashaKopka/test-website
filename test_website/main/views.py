@@ -57,3 +57,20 @@ class LogInView(View):
 class PostDetailView(DetailView):
     model = Post
     slug_field = 'url'
+
+
+class LikePostView(View):
+
+    def post(self, request, slug):
+        post = Post.objects.get(id=request.POST['id'])
+        user = User.objects.get(username=request.user.username)
+
+        if request.POST['like'] == 'true':
+            post.likes_count += 1
+            user.liked_posts.add(post)
+        else:
+            post.likes_count -= 1
+            user.liked_posts.remove(post)
+        user.save()
+        post.save()
+        return redirect('post_detail', slug)

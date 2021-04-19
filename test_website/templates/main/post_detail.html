@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load templatetags %}
 
 {% block content %}
 
@@ -16,12 +17,66 @@
             </article>
 
             <nav class="blog-pagination" aria-label="Pagination">
-                <span>{{ post.likes_count }}</span>
-                <a class="btn btn-outline-primary" href="">Like</a>
+                <span id="likes_count">{{ post.likes_count }}</span>
+                {% if post.name in liked_posts %}
+                <button id="like_button" class="btn btn-outline-primary btn-primary text-white">Like</button>
+                {% else %}
+                <button id="like_button" class="btn btn-outline-primary">Like</button>
+                {% endif %}
             </nav>
 
         </div>
 
     </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    $('#like_button').click(function(e) {
+		e.preventDefault();
+
+		var like = false;
+        if ($('#like_button').attr('class') != 'btn btn-outline-primary btn-primary text-white') {
+            like = true;
+        }
+
+		$.ajax({
+			type: 'POST',
+			url: 'like',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				id: {{ post.id }},
+				like: like,
+			},
+			success:function(){
+                if ($('#like_button').attr('class') != 'btn btn-outline-primary btn-primary text-white') {
+                    var likes_count = parseInt($('#likes_count').text());
+                    $('#likes_count').text(likes_count + 1);
+                    $('#like_button').addClass('btn-primary text-white');
+                } else {
+                    var likes_count = parseInt($('#likes_count').text());
+                    $('#likes_count').text(likes_count - 1);
+                    $('#like_button').removeClass('btn-primary text-white');
+                }
+			}
+		})
+	})
+</script>
 {% endblock content %}
