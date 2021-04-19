@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load templatetags %}
 
 {% block content %}
 
@@ -12,13 +11,13 @@
 
             <article class="blog-post">
                 <h2 class="blog-post-title">{{ post.name }}</h2>
-
+                <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.name }}">
                 <p>{{ post.article }}</p>
             </article>
 
             <nav class="blog-pagination" aria-label="Pagination">
                 <span id="likes_count">{{ post.likes_count }}</span>
-                {% if post.name in liked_posts %}
+                {% if post.liked_by_user %}
                 <button id="like_button" class="btn btn-outline-primary btn-primary text-white">Like</button>
                 {% else %}
                 <button id="like_button" class="btn btn-outline-primary">Like</button>
@@ -78,5 +77,6 @@
 			}
 		})
 	})
+
 </script>
 {% endblock content %}

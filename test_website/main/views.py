@@ -1,3 +1,4 @@
+from django.db.models import Exists, OuterRef
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.views.generic.base import View
@@ -62,6 +63,19 @@ class LogInView(View):
 class PostDetailView(DetailView):
     model = Post
     slug_field = 'url'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(
+            liked_by_user=Exists(
+                User.liked_posts.through.objects.filter(
+                    post_id=OuterRef('pk'),
+                    user_id=self.request.user.id
+                )
+            )
+        )
+        print('queryset: ', queryset)
+        return queryset
 
 
 class LikePostView(View):
