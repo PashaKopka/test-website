@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<title>New post</title>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">New post</h4>
+                <form action="{% url 'create_new_post' %}" method="post" class="needs-validation"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+
+                        <div class="col-12">
+                            <label for="name" class="form-label">Title</label>
+                            <input name="name" type="text" class="form-control" id="name" placeholder="Title">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="article" class="form-label">Text</label>
+                            <textarea name="article" style="height: 600px;" class="form-control" id="article"
+                                      required=""></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="file" class="form-label">Image</label>
+                            <input id="file" name="image" type="file" class="form-control">
+                        </div>
+
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

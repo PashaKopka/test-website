@@ -6,6 +6,7 @@ from django.views.generic import DetailView
 
 from .forms import SignUpForm, LogInForm
 from .models import User, Post
+from .logic import *
 
 
 # HomePage
@@ -33,7 +34,11 @@ class SignUpView(View):
         password = request.POST['password']
         if form.is_valid():
             User.objects.create_user(username=username, email=email, password=password)
-        return redirect('sign_up')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                user.last_login = now()
+                login(request, user)
+        return redirect('homepage')
 
 
 class LogInView(View):
@@ -49,7 +54,7 @@ class LogInView(View):
         if user is not None:
             user.last_login = now()
             login(request, user)
-        return redirect('log_in')
+        return redirect('homepage')
 
 
 # Post views
@@ -74,3 +79,18 @@ class LikePostView(View):
         user.save()
         post.save()
         return redirect('post_detail', slug)
+
+
+class CreateNewPostView(View):
+
+    def get(self, request):
+        return render(request, 'main/new_post.html', {})
+
+    def post(self, request):
+        name = request.POST['name']
+        article = request.POST['article']
+        image = request.FILES['image']
+        url = request.POST['name'].replace(' ', '-')
+
+        Post.objects.create(name=name, article=article, image=image, url=url)
+        return redirect('homepage')
