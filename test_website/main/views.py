@@ -5,9 +5,12 @@ from django.views.generic.base import View
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .forms import SignUpForm, LogInForm
 from .models import User, Post
-from .logic import *
+from .serializers import PostListSerializer, PostDetailSerializer
 
 
 # HomePage
@@ -108,3 +111,21 @@ class CreateNewPostView(View):
 
         Post.objects.create(name=name, article=article, image=image, url=url)
         return redirect('homepage')
+
+
+# REST API views
+
+class PostListAPIView(APIView):
+
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostListSerializer(posts, many=True)
+        return Response(serializer.data)
+
+
+class PostDetailAPIView(APIView):
+
+    def get(self, request, id):
+        post = Post.objects.get(id=id)
+        serializer = PostDetailSerializer(post)
+        return Response(serializer.data)

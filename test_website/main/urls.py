@@ -14,4 +14,8 @@ urlpatterns = [
     path('post_detail/<slug:slug>/like', LikePostView.as_view(), name='like_post'),
     path('new_post', CreateNewPostView.as_view(), name='new_post'),
     path('create_new_post', CreateNewPostView.as_view(), name='create_new_post'),
+
+    # REST API urls
+    path('posts_list_api/', PostListAPIView.as_view(), name='posts_list_api'),
+    path('post_detail_api/<int:id>/', PostDetailAPIView.as_view(), name='posts_detail_api')
 ]
