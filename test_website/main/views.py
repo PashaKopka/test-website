@@ -4,13 +4,16 @@ from django.utils.timezone import now
 from django.views.generic.base import View
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView
+from rest_framework import permissions
+from rest_framework.generics import CreateAPIView
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .forms import SignUpForm, LogInForm
 from .models import User, Post
-from .serializers import PostListSerializer, PostDetailSerializer, UserListSerializer, UserDetailSerializer
+from .serializers import PostListSerializer, PostDetailSerializer, UserListSerializer, UserDetailSerializer, \
+    UserSignUpSerializer
 
 
 # HomePage
@@ -145,3 +148,11 @@ class UserDetailAPIView(APIView):
         post = User.objects.get(id=id)
         serializer = UserDetailSerializer(post)
         return Response(serializer.data)
+
+
+class UserSignUpAPIView(CreateAPIView):
+    model = User
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = UserSignUpSerializer

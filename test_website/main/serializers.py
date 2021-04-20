@@ -22,6 +22,26 @@ class UserListSerializer(serializers.ModelSerializer):
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
+    posts = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+    liked_posts = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+
     class Meta:
         model = User
         fields = ('id', 'last_login', 'username', 'email', 'date_joined', 'last_request', 'posts', 'liked_posts')
+
+
+class UserSignUpSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+        )
+
+        return user
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password')
