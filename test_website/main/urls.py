@@ -21,5 +21,5 @@ urlpatterns = [
 
     path('users_list_api/', UserListAPIView.as_view(), name='users_list_api'),
     path('user_detail_api/<int:id>/', UserDetailAPIView.as_view(), name='users_detail_api'),
-    path('sign_up_user_api/', UserSignUpAPIView.as_view(), name='sign_up_user_api'),
+    path('api/sign_up/', UserSignUpAPIView.as_view(), name='sign_up_user_api'),
 ]
