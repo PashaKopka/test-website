@@ -3,6 +3,8 @@ from rest_framework import serializers
 from .models import Post, User
 
 
+# Post API serializers
+
 class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
@@ -14,6 +16,25 @@ class PostDetailSerializer(serializers.ModelSerializer):
         model = Post
         exclude = ('url',)
 
+
+class PostCreateSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        post = Post.objects.create(
+            name=validated_data['name'],
+            article=validated_data['article'],
+            image=validated_data['image'],
+            url=validated_data['name'].replace(' ', '-')
+        )
+
+        return post
+
+    class Meta:
+        model = Post
+        fields = ('id', 'name', 'article', 'image')
+
+
+# Post API serializers
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:

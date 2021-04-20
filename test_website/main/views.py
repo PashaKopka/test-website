@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from .forms import SignUpForm, LogInForm
 from .models import User, Post
 from .serializers import PostListSerializer, PostDetailSerializer, UserListSerializer, UserDetailSerializer, \
-    UserSignUpSerializer
+    UserSignUpSerializer, PostCreateSerializer
 
 
 # HomePage
@@ -117,6 +117,7 @@ class CreateNewPostView(View):
 
 
 # REST API views
+# Post API views
 
 class PostListAPIView(APIView):
 
@@ -133,6 +134,16 @@ class PostDetailAPIView(APIView):
         serializer = PostDetailSerializer(post)
         return Response(serializer.data)
 
+
+class PostCreateAPIView(CreateAPIView):
+    model = Post
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = PostCreateSerializer
+
+
+# User API views
 
 class UserListAPIView(APIView):
 
