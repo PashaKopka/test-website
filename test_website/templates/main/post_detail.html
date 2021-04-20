@@ -16,7 +16,11 @@
             </article>
 
             <nav class="blog-pagination" aria-label="Pagination">
-                <span id="likes_count">{{ post.likes_count }}</span>
+                {% for likes_count in likes %}
+                    {% if likes_count.id == post.id %}
+                        <span id="likes_count">{{ likes_count.number_of_answers }}</span>
+                    {% endif %}
+                {% endfor %}
                 {% if post.liked_by_user %}
                 <button id="like_button" class="btn btn-outline-primary btn-primary text-white">Like</button>
                 {% else %}

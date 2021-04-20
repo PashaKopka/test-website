@@ -1,4 +1,4 @@
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Count
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.views.generic.base import View
@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .forms import SignUpForm, LogInForm
-from .models import User, Post
+from .models import User, Post, Like
 from .serializers import PostListSerializer, PostDetailSerializer, UserListSerializer, UserDetailSerializer, \
     UserSignUpSerializer, PostCreateSerializer
 
@@ -69,6 +69,7 @@ class LogInView(View):
 class PostDetailView(DetailView):
     model = Post
     slug_field = 'url'
+    extra_context = {'likes': Post.objects.annotate(number_of_answers=Count('like'))}
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -80,7 +81,6 @@ class PostDetailView(DetailView):
                 )
             )
         )
-        print('queryset: ', queryset)
         return queryset
 
 
@@ -90,14 +90,7 @@ class LikePostView(View):
         post = Post.objects.get(id=request.POST['id'])
         user = User.objects.get(username=request.user.username)
 
-        if request.POST['like'] == 'true':
-            post.likes_count += 1
-            user.liked_posts.add(post)
-        else:
-            post.likes_count -= 1
-            user.liked_posts.remove(post)
-        user.save()
-        post.save()
+        like = Like.objects.create(post=post, user=user)
         return redirect('post_detail', slug)
 
 
@@ -116,7 +109,9 @@ class CreateNewPostView(View):
         return redirect('homepage')
 
 
-# REST API views
+#
+# REST API VIEWS
+#
 # Post API views
 
 class PostListAPIView(APIView):

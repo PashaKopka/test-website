@@ -11,7 +11,6 @@ class Post(models.Model):
     name = models.CharField(max_length=150, blank=False)
     article = models.TextField(blank=False)
     image = models.ImageField(upload_to='uploads/', blank=True)
-    likes_count = models.IntegerField(default=0)
     url = models.CharField(max_length=150, blank=False)
 
     def get_absolute_url(self):
@@ -47,3 +46,16 @@ class User(m.User):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class Like(models.Model):
+    """
+    This is like model
+    """
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(default=now())
+
+    class Meta:
+        verbose_name = 'Лайк'
+        verbose_name_plural = 'Лайки'
