@@ -17,5 +17,8 @@ urlpatterns = [
 
     # REST API urls
     path('posts_list_api/', PostListAPIView.as_view(), name='posts_list_api'),
-    path('post_detail_api/<int:id>/', PostDetailAPIView.as_view(), name='posts_detail_api')
+    path('post_detail_api/<int:id>/', PostDetailAPIView.as_view(), name='posts_detail_api'),
+
+    path('users_list_api/', UserListAPIView.as_view(), name='users_list_api'),
+    path('user_detail_api/<int:id>/', UserDetailAPIView.as_view(), name='users_detail_api'),
 ]

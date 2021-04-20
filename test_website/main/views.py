@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from .forms import SignUpForm, LogInForm
 from .models import User, Post
-from .serializers import PostListSerializer, PostDetailSerializer
+from .serializers import PostListSerializer, PostDetailSerializer, UserListSerializer, UserDetailSerializer
 
 
 # HomePage
@@ -128,4 +128,20 @@ class PostDetailAPIView(APIView):
     def get(self, request, id):
         post = Post.objects.get(id=id)
         serializer = PostDetailSerializer(post)
+        return Response(serializer.data)
+
+
+class UserListAPIView(APIView):
+
+    def get(self, request):
+        posts = User.objects.all()
+        serializer = UserListSerializer(posts, many=True)
+        return Response(serializer.data)
+
+
+class UserDetailAPIView(APIView):
+
+    def get(self, request, id):
+        post = User.objects.get(id=id)
+        serializer = UserDetailSerializer(post)
         return Response(serializer.data)
