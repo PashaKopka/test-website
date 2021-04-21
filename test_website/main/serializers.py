@@ -73,14 +73,8 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 class LikeCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
-        print('VALIDATED DATA: ', validated_data)
         user_id = self.context['request'].user.id,
-        print(type(user_id))
         post_id = self.context['request'].POST['post_id']
-
-        print(Like.objects.filter(user_id=user_id, post_id=post_id))
-        print(type(user_id[0]))
-        print(post_id)
 
         if Like.objects.filter(user_id=user_id, post_id=post_id):
             like = Like.objects.filter(user_id=user_id, post_id=post_id).delete()

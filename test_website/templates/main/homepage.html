@@ -35,7 +35,13 @@
                                     <a href="{{ post.get_absolute_url }}" type="button"
                                        class="btn btn-sm btn-outline-secondary">View</a>
                                 </div>
-                                <small class="text-muted">{{ post.likes_count }} likes</small>
+                                <small class="text-muted">
+                                        {% for likes_count in likes %}
+                                            {% if likes_count.id == post.id %}
+                                            <span id="likes_count">{{ likes_count.number_of_answers }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    likes</small>
                             </div>
                         </div>
                     </div>

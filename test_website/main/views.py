@@ -22,7 +22,8 @@ class HomePageView(View):
 
     def get(self, request):
         posts_list = Post.objects.all()
-        return render(request, 'main/homepage.html', {'posts_list': posts_list})
+        likes = Post.objects.annotate(number_of_answers=Count('like'))
+        return render(request, 'main/homepage.html', {'posts_list': posts_list, 'likes': likes})
 
 
 # User actions views
