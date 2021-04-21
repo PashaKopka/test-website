@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Post, User
+from .models import Post, User, Like
 
 
 # Post API serializers
@@ -66,3 +66,32 @@ class UserSignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
+
+
+# Like API serializers
+
+class LikeCreateSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        print('VALIDATED DATA: ', validated_data)
+        user_id = self.context['request'].user.id,
+        print(type(user_id))
+        post_id = self.context['request'].POST['post_id']
+
+        print(Like.objects.filter(user_id=user_id, post_id=post_id))
+        print(type(user_id[0]))
+        print(post_id)
+
+        if Like.objects.filter(user_id=user_id, post_id=post_id):
+            like = Like.objects.filter(user_id=user_id, post_id=post_id).delete()
+        else:
+            like = Like.objects.create(
+                user_id=user_id[0],
+                post_id=post_id
+            )
+
+        return like
+
+    class Meta:
+        model = Like
+        fields = ('id', 'user_id', 'post_id')
