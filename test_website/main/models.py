@@ -54,7 +54,7 @@ class Like(models.Model):
     """
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    datetime = models.DateTimeField(default=now())
+    date = models.DateField(default=now())
 
     class Meta:
         verbose_name = 'Лайк'

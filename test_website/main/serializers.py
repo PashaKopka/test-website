@@ -34,7 +34,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'article', 'image')
 
 
-# Post API serializers
+# User API serializers
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -89,3 +89,11 @@ class LikeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = ('id', 'user_id', 'post_id')
+
+
+# Analitics API serializers
+
+class AnaliticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ('id',)

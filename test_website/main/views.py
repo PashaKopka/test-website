@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from .forms import SignUpForm, LogInForm
 from .models import User, Post, Like
 from .serializers import PostListSerializer, PostDetailSerializer, UserListSerializer, UserDetailSerializer, \
-    UserSignUpSerializer, PostCreateSerializer, LikeCreateSerializer
+    UserSignUpSerializer, PostCreateSerializer, LikeCreateSerializer, AnaliticsSerializer
 
 
 # HomePage
@@ -171,3 +171,15 @@ class LikePostAPIView(CreateAPIView):
         permissions.IsAuthenticated
     ]
     serializer_class = LikeCreateSerializer
+
+
+# Analitics API view
+
+class AnaliticsAPIView(APIView):
+
+    def get(self, request):
+        date_from = request.GET['date_from']
+        date_to = request.GET['date_to']
+        likes = Like.objects.filter(date__range=[date_from, date_to])
+        serializer = AnaliticsSerializer(likes, many=True)
+        return Response(serializer.data)
