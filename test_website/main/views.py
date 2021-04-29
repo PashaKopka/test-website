@@ -76,7 +76,7 @@ class PostDetailView(DetailView):
         queryset = super().get_queryset()
         queryset = queryset.annotate(
             liked_by_user=Exists(
-                User.liked_posts.through.objects.filter(
+                Like.objects.filter(
                     post_id=OuterRef('pk'),
                     user_id=self.request.user.id
                 )
@@ -91,7 +91,12 @@ class LikePostView(View):
         post = Post.objects.get(id=request.POST['id'])
         user = User.objects.get(username=request.user.username)
 
-        like = Like.objects.create(post=post, user=user)
+        if request.POST['like'] == 'true':
+            print('da')
+            like = Like.objects.create(post=post, user=user)
+        else:
+            print('net')
+            Like.objects.filter(post=post, user=user).delete()
         return redirect('post_detail', slug)
 
 

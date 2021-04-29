@@ -18,7 +18,7 @@
             <nav class="blog-pagination" aria-label="Pagination">
                 {% for likes_count in likes %}
                     {% if likes_count.id == post.id %}
-                        <span id="likes_count">{{ likes_count.number_of_answers }}</span>
+                    <span id="likes_count">{{ likes_count.number_of_answers }}</span>
                     {% endif %}
                 {% endfor %}
                 {% if post.liked_by_user %}
