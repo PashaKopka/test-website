@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from rest_framework import serializers
 
 from .models import Post, User, Like
@@ -71,24 +73,32 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 # Like API serializers
 
 class LikeCreateSerializer(serializers.ModelSerializer):
+    post_id = serializers.IntegerField()
 
     def create(self, validated_data):
-        user_id = self.context['request'].user.id,
-        post_id = self.context['request'].POST['post_id']
+        user_id = self.context['request'].user.id
+        post_id = validated_data['post_id']
 
         if Like.objects.filter(user_id=user_id, post_id=post_id):
             like = Like.objects.filter(user_id=user_id, post_id=post_id).delete()
         else:
             like = Like.objects.create(
-                user_id=user_id[0],
+                user_id=user_id,
                 post_id=post_id
             )
 
         return like
 
+    def to_representation(self, instance):
+        try:
+            data = super().to_representation(instance)
+        except AttributeError:
+            data = OrderedDict([('post_id', None), ('user_id', None), ('id', None)])
+        return data
+
     class Meta:
         model = Like
-        fields = ('id', 'user_id', 'post_id')
+        fields = ('post_id', 'user_id', 'id')
 
 
 # Analitics API serializers
