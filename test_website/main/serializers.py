@@ -110,3 +110,9 @@ class AnaliticsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = ('id', 'post', 'user', 'date')
+
+
+class AnaliticsFormatSerializer(serializers.Serializer):
+    date = serializers.DateField()
+    count = serializers.IntegerField()
+

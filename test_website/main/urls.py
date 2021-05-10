@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/sign_up/', UserSignUpAPIView.as_view(), name='sign_up_user_api'),
 
     path('api/analitics/', AnaliticsAPIView.as_view(), name='api_analitics'),
+    path('api/analitics/format/', AnaliticsFormatAPIView.as_view(), name='api_analitics_format'),
 ]
